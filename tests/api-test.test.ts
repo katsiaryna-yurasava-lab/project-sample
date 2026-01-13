@@ -3,9 +3,8 @@ import axios from "axios";
 
 test('CRUD operations', async () => {
 
-   // const response = await axios.get('')
     // CREATE
-    const createResp = await axios.post('',
+    const createResp = await axios.post('https://jsonplaceholder.typicode.com/users',
         {
             name: 'Alice',
             username: 'alice123',

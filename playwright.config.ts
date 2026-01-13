@@ -1,9 +1,11 @@
 import { defineConfig, devices } from 'playwright/test';
 
-module.exports = defineConfig({
-//export default defineConfig({
+export default defineConfig({
     // Look for test files in the "tests" directory, relative to this configuration file.
-    testDir: 'tests',
+    testDir: './tests',
+    
+    // Match test files
+    testMatch: /.*\.test\.ts/,
 
     // Run all tests in parallel.
     fullyParallel: true,
@@ -35,9 +37,10 @@ module.exports = defineConfig({
         },
     ],
     // Run your local dev server before starting the tests.
-    webServer: {
-        command: 'npm run start',
-        url: 'http://localhost:3000',
-        reuseExistingServer: !process.env.CI,
-    },
+    // Commented out to avoid blocking UI mode
+    // webServer: {
+    //     command: 'npm run start',
+    //     url: 'http://localhost:3000',
+    //     reuseExistingServer: !process.env.CI,
+    // },
 });
