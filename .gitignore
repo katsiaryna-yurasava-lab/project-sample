@@ -1,4 +1,4 @@
 /node_modules/
 /.idea/
-/playwright-report/index.html
+/playwright-report/
 /test-results/api-test-CRUD-operations-chromium/trace.zip

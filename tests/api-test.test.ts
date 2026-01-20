@@ -1,42 +1,26 @@
 import {test, expect} from "playwright/test";
-import axios from "axios";
+import {UserService} from "../services/userService";
+import {testUserData, testIds} from "../test-data/userTestData";
 
 test('CRUD operations', async () => {
+    const userService = new UserService();
 
     // CREATE
-    const createResp = await axios.post('https://jsonplaceholder.typicode.com/users',
-        {
-            name: 'Alice',
-            username: 'alice123',
-            email: 'alice@example.com'
-        });
+    const createdUser = await userService.create(testUserData.create);
 
-    expect(createResp.status).toBe(201);
-    const userId = createResp.data.id;
-
+    expect(createdUser.id).toBeDefined();
+    const userId = createdUser.id!;
 
     // READ
-    const getResp = await axios.get('https://jsonplaceholder.typicode.com/users/1');
-    expect(getResp.status).toBe(200);
-    expect(getResp.data.id).toBe(1);
+    const user = await userService.read(testIds.userId);
+    expect(user.id).toBe(testIds.userId);
 
     // UPDATE
-    const updateResp = await axios.put('https://jsonplaceholder.typicode.com/users/1',
-        {
-            id: 1,
-            name: 'Alice Updated',
-            username: 'alice_updated',
-            email: 'alice_updated@example.com'
-        })
+    const updatedUser = await userService.update(testIds.userId, testUserData.update);
 
-    expect(updateResp.status).toBe(200);
-    expect(updateResp.data.name).toBe('Alice Updated');
+    expect(updatedUser.name).toBe(testUserData.update.name);
 
     // DELETE
-    const deleteResp = await axios.delete('https://jsonplaceholder.typicode.com/users/1');
-
-    expect(deleteResp.status).toBe(200);
-
-
-
+    await userService.delete(testIds.userId);
+    // Note: jsonplaceholder.typicode.com doesn't actually delete, so we just verify the call succeeds
 })
